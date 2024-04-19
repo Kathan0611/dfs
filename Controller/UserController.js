@@ -33,10 +33,10 @@ exports.createUser = async(req,res)=>{
 }
 
 
-exports.getAllUser=async (req,res)=>{
+exports.get5document=async (req,res)=>{
     try{
-        const user=await User.find({});
-        // console.log("::::::::::::::")
+        const user=await User.find({}).limit(5);
+        
          if(!user){
            return res.status(404).json({
                 message:"document not found"
@@ -46,6 +46,7 @@ exports.getAllUser=async (req,res)=>{
         return res.status(200).json({
             data:{
                 staus:'Success',
+                result:user.length,
                 data:{
                     user:user
                 }
@@ -100,6 +101,7 @@ exports.upadateUser= async(req,res)=>{
            
             res.status(404).json('Document is not found')
         }
+          await UpdatedUser.save();
 
        return res.status(200).json({
             status:'Success',
@@ -142,3 +144,28 @@ exports.deleteUser= async (req,res)=>{
         })
     }
 }
+
+exports.dashbord =async (req,res)=>{
+    try{
+         const user= await User.aggregate([{$count:"name"}])
+        //  const user= await User.find({})
+         if(!user){
+            res.status(404).json({message:'User document Not Found '})
+         }
+res.render("dashbord", {count: user[0].name})
+        //  res.status(200).json({
+        //     status:"success",
+        //     // result:user.length,
+        //     message:'No of User',
+        //     data:{
+        //         user:user[0].name
+        //     }
+        //  })
+    }
+    catch(err){
+        res.status(400).json({message:err.message});
+    }
+}
+
+
+

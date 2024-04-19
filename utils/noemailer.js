@@ -1,19 +1,31 @@
-const nodemailer= require('nodemailer');
-const smtpTransport = require('nodemailer-smtp-transport');
-var transporter = nodemailer.createTransport({
-  host: "sandbox.smtp.mailtrap.io",
-  port: 2525,
+const nodemailer = require("nodemailer");
+const smtpTransport = require("nodemailer-smtp-transport");
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
   auth: {
-    user: "01b2b3a42b4434",
-    pass: "fb4f164b488ae6"
-  }
+    user: "adalajakathan06@gmail.com",
+    pass: "xmck kvgv unsz vccw",
+  },
 });
 
-// const mailOptions= nodemailer.sendMail({
-//       form:"adalajakathan06@gmail.com",
-//       to:"adalajaketan7@gmail.com",
-//       subject:'Password reset OTP',
-//       text: `Your OTP (It is expired after 2 min) : ${otp}`,
-// })
+exports.sendOtpMail = async (otp) => {
+  try {
+    const mailOptions = {
+      form: "adalajakathan06@gmail.com",
+      to: "adalajaketan7@gmail.com",
+      subject: "Password reset OTP",
+      text: `Your OTP (It is expired after 2 min) : ${otp}`,
+    };
 
-module.exports=transporter
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log("Error", error);
+      } else {
+        console.log("Success", info.response);
+      }
+    });
+  } catch (err) {
+    throw err;
+  }
+};
