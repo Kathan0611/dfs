@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/dashboard.css"/>
+    <script type="text/javascript">
+
+      function toggle(button)
+      {
+        // <%- JSON.stringify(toggleValue) %>  
+        //  var toggleValue = <%= toggleValue %> 
+
+        if(document.getElementById("1").value=="OFF")
+        {
+
+            toggleValue=document.getElementById("1").value="ON";
+            // button.innerHTML=toggleValue
+        
+        }
+        else if(document.getElementById("1").value=="ON")
+        {
+        
+            toggleValue= document.getElementById("1").value="OFF";
+          
+        }
+        button.style.color = "white";
+    }
+  </script>
+</head>
+<body>
+    
+    <% if(toggleValue==="ON") { %>
+        <h2>The button is ON.</h2>
+        <div class="container">
+            <h1>Welcome to Dashboard, <%= email %></h1>
+            <h2>Users Count: <%= count %></h2>
+            <div class="row">
+                <% users.forEach(function(user) { %>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header"><%= user.name %></div>
+                            <div class="card-body">
+                                <p>Email: <%= user.email %></p>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    <% } else { %>
+        <h2> </h2>
+    <% } %>
+    <div class="container">
+     <input type="submit"  value="<%= toggleValue %>"  id ="1" style="background-color: rgb(0, 81, 255)"   onclick="toggle(this)" />
+    </div>
+
+
+    <!-- rs -->
+</body>
+</html>
+
